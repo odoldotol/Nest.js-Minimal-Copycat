@@ -6,7 +6,9 @@
   "license": "ISC",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/main.js",
+    "start": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts'",
+    "start:prod": "ts-node -r tsconfig-paths/register dist/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -16,6 +18,9 @@
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/node": "^20.3.1",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.3"
   }
 }
