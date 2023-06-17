@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 export function Module(metadata: any): ClassDecorator {
     return (target: Function) => {
         for (const property in metadata) {
