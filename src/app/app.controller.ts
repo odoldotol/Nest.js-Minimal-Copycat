@@ -1,4 +1,5 @@
-import { Controller, Get } from "src/nestjs_copycat/common";
+// import { Controller, Get } from "src/nestjs_copycat/common";
+import { Controller, Get } from "src/nestjs/packages/common";
 import { AppService } from "./app.service";
 
 @Controller()
