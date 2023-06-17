@@ -1,5 +1,4 @@
-// import { Injectable } from 'src/nestjs_copycat/common';
-import { Injectable } from 'src/nestjs/packages/common';
+import { Injectable } from 'src/nestjs_copycat/common';
 
 @Injectable()
 export class AppService {

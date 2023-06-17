@@ -31,24 +31,6 @@
     "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
       "src/*": ["src/*"],
-      "@nestjs/common": ["./src/nestjs/packages/common"],
-      "@nestjs/common/*": ["./src/nestjs/packages/common/*"],
-      "@nestjs/core": ["./src/nestjs/packages/core"],
-      "@nestjs/core/*": ["./src/nestjs/packages/core/*"],
-      "@nestjs/microservices": ["./src/nestjs/packages/microservices"],
-      "@nestjs/microservices/*": ["./src/nestjs/packages/microservices/*"],
-      "@nestjs/websockets": ["./src/nestjs/packages/websockets"],
-      "@nestjs/websockets/*": ["./src/nestjs/packages/websockets/*"],
-      "@nestjs/testing": ["./src/nestjs/packages/testing"],
-      "@nestjs/testing/*": ["./src/nestjs/packages/testing/*"],
-      "@nestjs/platform-express": ["./src/nestjs/packages/platform-express"],
-      "@nestjs/platform-express/*": ["./src/nestjs/packages/platform-express/*"],
-      "@nestjs/platform-ws": ["./src/nestjs/packages/platform-ws"],
-      "@nestjs/platform-ws/*": ["./src/nestjs/packages/platform-ws/*"],
-      "@nestjs/platform-fastify": ["./src/nestjs/packages/platform-fastify"],
-      "@nestjs/platform-fastify/*": ["./src/nestjs/packages/platform-fastify/*"],
-      "@nestjs/platform-socket.io": ["./src/nestjs/packages/platform-socket.io"],
-      "@nestjs/platform-socket.io/*": ["./src/nestjs/packages/platform-socket.io/*"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
@@ -102,7 +84,7 @@
     // "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
 
     /* Type Checking */
-    // "strict": true,                                      /* Enable all strict type-checking options. */
+    "strict": true,                                      /* Enable all strict type-checking options. */
     // "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
     // "strictNullChecks": true,                         /* When type checking, take into account 'null' and 'undefined'. */
     // "strictFunctionTypes": true,                      /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */
