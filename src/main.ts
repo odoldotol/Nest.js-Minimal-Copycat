@@ -1,4 +1,4 @@
-import { NestFactory } from "src/nestjs_copycat/core";
+import { NestFactory } from "src/nestjs-copycat/core";
 import { AppModule } from "./app/app.module";
 
 const bootstrap = async () => {
