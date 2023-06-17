@@ -6,5 +6,6 @@ import { GreetingService } from './greeting.service';
   imports: [],
   controllers: [GreetingController],
   providers: [GreetingService],
+  exports: [GreetingService],
 })
 export class GreetingModule {}
