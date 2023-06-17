@@ -1,5 +1,4 @@
-// import { Module } from 'src/nestjs_copycat/common';
-import { Module } from 'src/nestjs/packages/common';
+import { Module } from 'src/nestjs-copycat/common';
 import { GreetingController } from './greeting.controller';
 import { GreetingService } from './greeting.service';
 

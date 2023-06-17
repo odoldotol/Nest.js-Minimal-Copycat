@@ -1,5 +1,4 @@
-// import { Injectable } from 'src/nestjs_copycat/common';
-import { BadRequestException, Injectable } from 'src/nestjs/packages/common';
+import { Injectable } from 'src/nestjs-copycat/common';
 
 @Injectable()
 export class GreetingService {
@@ -10,7 +9,11 @@ export class GreetingService {
     if (body.name?.trim().length > 0) {
       return `Hello ${body.name}!`;
     } else {
-      throw new BadRequestException('Invalid name');
+      return {
+        "message": "Invalid name",
+        "error": "Bad Request",
+        "statusCode": 400
+      };
     }
   }
 
