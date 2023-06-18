@@ -16,21 +16,14 @@ export const RequestMapping = (
 ): MethodDecorator => {
   const pathMetadata = metadata[PATH_METADATA];
   const path = pathMetadata && pathMetadata.length ? pathMetadata : '/';
-  // console.log("path", path); 
   const requestMethod = metadata[METHOD_METADATA] || RequestMethod.GET;
-  // console.log("requestMethod", requestMethod);
 
   return (
     target: object,
     key: string | symbol,
     descriptor: TypedPropertyDescriptor<any>,
   ) => {
-    // console.log("target", target.constructor.name);
-    // console.log("key", key);
-    // console.log("descriptor", descriptor);
     Reflect.defineMetadata(PATH_METADATA, path, descriptor.value);
-    // console.log(Object.getOwnPropertyDescriptor(target, key));
-    // console.log(target.constructor.name, key, PATH_METADATA, Reflect.getMetadata(PATH_METADATA, Object.getOwnPropertyDescriptor(target, key)!.value));
     Reflect.defineMetadata(METHOD_METADATA, requestMethod, descriptor.value);
     return descriptor;
   };
