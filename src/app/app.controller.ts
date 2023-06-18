@@ -1,4 +1,4 @@
-import { Controller } from "src/nestjs-copycat/common";
+import { Controller, Get, Post } from "src/nestjs-copycat/common";
 import { AppService } from "./app.service";
 import { GreetingService } from "src/greeting/greeting.service";
 
@@ -7,12 +7,12 @@ export class AppController {
 
   constructor(private readonly appService: AppService) {}
 
-  // @Get()
+  @Get("hello-world")
   helloWorld() {
     return this.appService.helloWorld();
   }
 
-  // @Post()
+  @Post()
   greeting(body: { name: string }) {
     return this.appService.greeting(body);
   }
