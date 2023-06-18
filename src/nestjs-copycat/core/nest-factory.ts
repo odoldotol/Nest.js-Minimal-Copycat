@@ -14,14 +14,12 @@ export class NestFactoryStatic {
     
     const container = new NestContainer();
     const app = express();
+    app.use(express.json());
 
     await this.moduleInit(moduleCls, container, app);
 
     // console.log(container.instancesMap);
 
-
-
-    app.use(express.json());
     return app;
 
   }

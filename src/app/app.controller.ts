@@ -1,4 +1,5 @@
 import { Controller, Get, Post } from "src/nestjs-copycat/common";
+import { Request, Response } from "express";
 import { AppService } from "./app.service";
 import { GreetingService } from "src/greeting/greeting.service";
 
@@ -8,13 +9,13 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get("hello-world")
-  helloWorld() {
-    return this.appService.helloWorld();
+  helloWorld(req: Request, res: Response) {
+    res.send(this.appService.helloWorld());
   }
 
   @Post()
-  greeting(body: { name: string }) {
-    return this.appService.greeting(body);
+  greeting(req: Request, res: Response) {
+    res.send(this.appService.greeting(req.body));
   }
 
 }
