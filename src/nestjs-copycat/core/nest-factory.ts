@@ -4,6 +4,7 @@ import { NestContainer } from './injector';
 import { Type } from "../common/interfaces";
 import { MODULE_METADATA, PATH_METADATA, METHOD_METADATA } from "../common/constants";
 import { RequestMethod } from '../common';
+import { pathParser } from "../common";
 
 
 export class NestFactoryStatic {
@@ -61,20 +62,15 @@ export class NestFactoryStatic {
     container.getControllers().forEach((instance) => {
       const router = express.Router();
       const routeLogs: string[] = [];
-      let controllerPath = Reflect.getMetadata(PATH_METADATA, instance.constructor);
-      controllerPath = controllerPath.replace(/^\/?/, "/");
+      const controllerPath = pathParser(Reflect.getMetadata(PATH_METADATA, instance.constructor));
       console.log(`${instance.constructor.name} {${controllerPath}}`);
       const prototype = Object.getPrototypeOf(instance);
       Object.getOwnPropertyNames(prototype).forEach((propName) => {
         if (propName === "constructor") return;
         const method = Reflect.getMetadata(METHOD_METADATA, prototype[propName]);
-        let methodPath = Reflect.getMetadata(PATH_METADATA, prototype[propName]);
-        methodPath = methodPath.replace(/^\/?/, "/");
+        const methodPath = pathParser(Reflect.getMetadata(PATH_METADATA, prototype[propName]));
         router[RequestMethod[method].toLowerCase()](methodPath, prototype[propName].bind(instance));
-        let logPath = controllerPath+methodPath;
-        logPath = logPath.replace(/\/{2,}/g, "/");
-        logPath = logPath.replace(/([^\/])\/$/, "$1");
-        routeLogs.push(`Mapped {${logPath}, ${RequestMethod[method]}} route`);
+        routeLogs.push(`Mapped {${pathParser(controllerPath + methodPath)}, ${RequestMethod[method]}} route`);
       });
       app.use(controllerPath, router);
       routeLogs.forEach((log) => console.log(log));
