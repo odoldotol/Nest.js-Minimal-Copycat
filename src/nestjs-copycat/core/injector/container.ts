@@ -1,4 +1,5 @@
 import { Type } from "src/nestjs-copycat/common/interfaces";
+import { CONTROLLER_WATERMARK } from "src/nestjs-copycat/common/constants";
 
 export class NestContainer {
 
@@ -25,6 +26,12 @@ export class NestContainer {
 
   get instancesMap() { // 임시
     return this.instances;
+  }
+
+  public getControllers() {
+    return [...this.instances.values()].filter(instance => {
+      return Reflect.getMetadata(CONTROLLER_WATERMARK, instance.constructor);
+    });
   }
 
 }

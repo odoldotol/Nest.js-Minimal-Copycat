@@ -8,7 +8,7 @@ export class GreetingService {
   greeting(body: { name: string }) {
     if (body.name?.trim().length > 0) {
       return `Hello ${body.name}!`;
-    } else {
+    } else { // Todo: 에러 핸들링
       return {
         "message": "Invalid name",
         "error": "Bad Request",
