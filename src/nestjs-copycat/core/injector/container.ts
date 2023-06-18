@@ -18,8 +18,9 @@ export class NestContainer {
   }
 
   public getDependencies(cls: Type<any>) {
-    return Reflect.getMetadata('design:paramtypes', cls)
-    .map((dep: Type<any>) => this.getInstance(dep.name)) || [];
+    return Reflect.getMetadata('design:paramtypes', cls)?.map(
+      (dep: Type<any>) => this.getInstance(dep.name)
+    ) || [];
   }
 
   get instancesMap() { // 임시
