@@ -1,9 +1,12 @@
+import { GoodbyeService } from 'src/goodbye/goodbye.service';
 import { Injectable } from 'src/nestjs-copycat/common';
 
 @Injectable()
 export class GreetingService {
 
-  constructor() {}
+  constructor(
+    private readonly goodbyeService: GoodbyeService,
+  ) {}
 
   greeting(body: { name: string }) {
     if (body.name?.trim().length > 0) {
@@ -16,5 +19,7 @@ export class GreetingService {
       };
     }
   }
+
+  goodbye = this.goodbyeService.goodbye;
 
 }

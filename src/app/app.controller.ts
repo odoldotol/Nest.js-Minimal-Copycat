@@ -18,4 +18,9 @@ export class AppController {
     res.send(this.appService.greeting(req.body));
   }
 
+  @Get("goodbye")
+  goodbye(req: Request, res: Response) {
+    res.send(this.appService.goodbye());
+  }
+
 }

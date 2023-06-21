@@ -1,4 +1,4 @@
-import { Controller, Post } from "src/nestjs-copycat/common";
+import { Controller, Get, Post } from "src/nestjs-copycat/common";
 import { Request, Response } from "express";
 import { GreetingService } from "./greeting.service";
 
@@ -10,6 +10,11 @@ export class GreetingController {
   @Post()
   greeting(req: Request, res: Response) {
     res.send(this.greetingService.greeting(req.body));
+  }
+
+  @Get("goodbye")
+  goodbye(req: Request, res: Response) {
+    res.send(this.greetingService.goodbye());
   }
 
 }
