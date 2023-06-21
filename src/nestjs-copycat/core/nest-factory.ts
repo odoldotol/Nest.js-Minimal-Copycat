@@ -1,11 +1,10 @@
-const express = require('express')
+const express = require('express');
 import { Express } from "express";
 import { NestContainer } from './injector';
 import { Type } from "../common/interfaces";
 import { MODULE_METADATA, PATH_METADATA, METHOD_METADATA } from "../common/constants";
 import { RequestMethod } from '../common';
 import { pathParser } from "../common";
-
 
 export class NestFactoryStatic {
 
@@ -31,6 +30,7 @@ export class NestFactoryStatic {
     
     await Promise.all(Reflect.getMetadata(MODULE_METADATA.IMPORTS, module).map(
       async (importedModule: Type<any>) => {
+        // Todo: 이미 한번 쳐다본 모듈은 다시 보지 말아야함
         await this.moduleInit(importedModule, container);
       }
     ));
