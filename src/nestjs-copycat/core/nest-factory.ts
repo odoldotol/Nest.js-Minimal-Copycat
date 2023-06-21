@@ -26,11 +26,17 @@ export class NestFactoryStatic {
 
   }
 
+  private readonly moduleMap = new Map<string, any>(); // 컨테이너로 옮기기 // 임시
+  // Todo: imports, providers, controllers 가 undefined 인 경우라도 문제없이 초기화 해야함.
+  // Todo: 내부함수로 나누기, 일부 내부함수를 컨테이너로 옮기기
   private async moduleInit(module: Type<any>, container: NestContainer) {
-    
+
+    this.moduleMap.set(module.name, module); // 임시
+
     await Promise.all(Reflect.getMetadata(MODULE_METADATA.IMPORTS, module).map(
       async (importedModule: Type<any>) => {
-        // Todo: 이미 한번 쳐다본 모듈은 다시 보지 말아야함
+        // Todo: 이미 한번 쳐다본 모듈은 다시 보지 말아야함 // <- 컨테이너가 모듈을 다루도록 하는것이 선행되어야함.
+        this.moduleMap.has(importedModule.name) || // 임시
         await this.moduleInit(importedModule, container);
       }
     ));
