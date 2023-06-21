@@ -6,8 +6,8 @@ export class NestContainer {
   private readonly instances = new Map<string, any>();
 
   public addInstance(key: string, instance: any) {
-    if (this.instances.has(instance.name))
-      throw new Error(`Duplicated provider name: ${instance.name}`);
+    if (this.instances.has(instance.constructor.name))
+      throw new Error(`Duplicated provider name: ${instance.constructor.name}`);
     this.instances.set(key, instance);
   }
 
