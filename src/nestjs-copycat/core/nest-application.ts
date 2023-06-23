@@ -14,25 +14,17 @@ export class NestApplication
 {
   // private readonly routesResolver: Resolver;
   private isListening = false;
+  private readonly expressApp = express() as Express;
   
   constructor(container: NestContainer) {
     super(container);
-
-    const expressApp = express();
-    expressApp.use(express.json());
 
     // this.routesResolver = new RoutesResolver(this.container);
   }
 
   public async init() {
-    return this;
-  }
+    this.expressApp.use(express.json());
 
-  public use(...args: any[]): this {
-    return this;
-  }
-
-  public async listen(port: number | string, callback?: () => void): Promise<any> {
     const resolveRoutes = (container: NestContainer, app: Express) => {
       container.getControllers().forEach((instance) => {
         const router = express.Router();
@@ -51,7 +43,31 @@ export class NestApplication
         routeLogs.forEach((log) => console.log(log));
       });
     }
-    // this.resolveRoutes(container, expressApp);
+
+    await this.registerModules();
+    await this.registerRouter(); // this.resolveRoutes(container, expressApp);
+    await this.callInitHook();
+    await this.registerRouterHooks();
+    await this.callBootstrapHook();
+
+    this.isInitialized = true;
+    console.log(`Nest application successfully started`);
+    return this;
+  }
+
+  public use(...args: any[]): this {
+    return this;
+  }
+
+  public async listen(port: number | string, callback?: () => void): Promise<any> {
+
+    !this.isInitialized && (await this.init());
+    
+    !this.isListening && this.expressApp.listen(port, () => {
+      callback && callback();
+      this.isListening = true;
+    });
+
     return this;
   }
 
