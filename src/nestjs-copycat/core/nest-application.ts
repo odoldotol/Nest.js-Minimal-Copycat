@@ -55,7 +55,11 @@ export class NestApplication
     return this;
   }
 
+  /**
+   * @override Express.use
+   */
   public use(...args: any[]): this {
+    this.expressApp.use(...args);
     return this;
   }
 
