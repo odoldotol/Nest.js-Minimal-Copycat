@@ -1,6 +1,5 @@
 import { CONTROLLER_WATERMARK } from "src/nestjs-copycat/common/constants";
 
-// instanceLoader 역할도 겸하는중. Todo: 분리하기
 export class NestContainer {
 
   private readonly modules = new Map<string, any>(); // Class ModulesContainer // ./injector/modules-container.ts
