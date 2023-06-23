@@ -1,27 +1,21 @@
-const express = require('express');
-import { Express } from "express";
 import { NestContainer } from './injector';
-import { Type } from "../common/interfaces";
-import { PATH_METADATA, METHOD_METADATA, MODULE_METADATA } from "../common/constants";
-import { RequestMethod } from '../common';
-import { pathParser } from "../common";
+import { INestApplication, Type } from "../common/interfaces";
+import { MODULE_METADATA } from "../common/constants";
+import { NestApplication } from "./nest-application";
 
 export class NestFactoryStatic {
 
-  public async create(
-    moduleCls: Type<any>,
-  ): Promise<Express> {
+  public async create<T extends INestApplication = INestApplication>(
+    moduleCls: any,
+  ): Promise<T> {
     
     const container = new NestContainer();
     
     await this.initialize(moduleCls, container);
     
-    const app = express();
-    app.use(express.json());
-    
-    this.resolveRoutes(container, app);
+    const instance = new NestApplication(container);
 
-    return app;
+    return instance as T;
 
   }
 
@@ -64,25 +58,6 @@ export class NestFactoryStatic {
 
     console.log(module.name, "Init");
   
-  }
-
-  private resolveRoutes(container: NestContainer, app: Express) {
-    container.getControllers().forEach((instance) => {
-      const router = express.Router();
-      const routeLogs: string[] = [];
-      const controllerPath = pathParser(Reflect.getMetadata(PATH_METADATA, instance.constructor));
-      console.log(`${instance.constructor.name} {${controllerPath}}`);
-      const prototype = Object.getPrototypeOf(instance);
-      Object.getOwnPropertyNames(prototype).forEach((propName) => {
-        if (propName === "constructor") return;
-        const method = Reflect.getMetadata(METHOD_METADATA, prototype[propName]);
-        const methodPath = pathParser(Reflect.getMetadata(PATH_METADATA, prototype[propName]));
-        router[RequestMethod[method].toLowerCase()](methodPath, prototype[propName].bind(instance));
-        routeLogs.push(`Mapped {${pathParser(controllerPath + methodPath)}, ${RequestMethod[method]}} route`);
-      });
-      app.use(controllerPath, router);
-      routeLogs.forEach((log) => console.log(log));
-    });
   }
 
   // Todo: core/scanner.ts - DependenciesScanner 로 이동하기
