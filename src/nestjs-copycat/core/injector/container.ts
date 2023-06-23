@@ -1,5 +1,8 @@
 import { CONTROLLER_WATERMARK } from "src/nestjs-copycat/common/constants";
 
+/**
+ * @todo ModulesContainer
+ */
 export class NestContainer {
 
   private readonly modules = new Map<string, any>(); // Class ModulesContainer // ./injector/modules-container.ts

@@ -18,6 +18,9 @@ export class NestFactoryStatic {
     return instance;
   }
 
+  /**
+   * @todo Injector, InstanceLoader, MetadataScanner, DependenciesScanner
+   */
   private async initialize(module: any, container: NestContainer) {
     await this.moduleInit(module, container);
   };
