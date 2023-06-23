@@ -43,9 +43,11 @@ export class NestFactoryStatic {
       async (provider: Type<any>) => {
         // Todo: 인젝터블 확인 (당연히 있을것 같은데 Nest 는 이를 검사하여 블락하지 않는다... Service Provider 에 Controller 데코레이터 달고 모듈에 providers 로 등록하는것이 가능하고 정상동작하는듯 하다)
         // if (!Reflect.getMetadata(INJECTABLE_WATERMARK, provider)) throw new Error(`Not injectable: ${provider.name}`);
+        
         // Todo: getDependencies 해서 가져온 의존성들이 본인의 프로바이더 또는 imported module 의 exported provider 인지 확인해야함.
+        // 모듈컨테이너 구현하자. 애초에 모듈 컨테이너에서 스캔해서 인스턴스화 하면 확인할 필요도 없다.
+        
         const instance = new provider(...this.getDependencies(provider, container));
-        // Todo: 이때 onModuleInit 메서드 가졌으면 실행해주기?
         container.addInstance(provider.name, instance);
       }
     ));
