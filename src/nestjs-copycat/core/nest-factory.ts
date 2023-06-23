@@ -13,11 +13,10 @@ export class NestFactoryStatic {
   ): Promise<Express> {
     
     const container = new NestContainer();
+    
+    await this.initialize(moduleCls, container);
+    
     const app = express();
-
-    
-    await this.moduleInit(moduleCls, container);
-    
     app.use(express.json());
     
     this.resolveRoutes(container, app);
@@ -25,6 +24,10 @@ export class NestFactoryStatic {
     return app;
 
   }
+
+  private async initialize(module: any, container: NestContainer) {
+    await this.moduleInit(module, container);
+  };
 
   private readonly moduleMap = new Map<string, any>(); // 컨테이너로 옮기기 // 임시
   // Todo: imports, providers, controllers 가 undefined 인 경우라도 문제없이 초기화 해야함.
