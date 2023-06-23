@@ -1,6 +1,6 @@
 import { NestContainer } from './injector';
 import { INestApplication, Type } from "../common/interfaces";
-import { MODULE_METADATA } from "../common/constants";
+import { INJECTABLE_WATERMARK, MODULE_METADATA } from "../common/constants";
 import { NestApplication } from "./nest-application";
 
 export class NestFactoryStatic {
@@ -41,7 +41,8 @@ export class NestFactoryStatic {
 
     await Promise.all(Reflect.getMetadata(MODULE_METADATA.PROVIDERS, module).map(
       async (provider: Type<any>) => {
-        // Todo: 인젝터블 확인
+        // Todo: 인젝터블 확인 (당연히 있을것 같은데 Nest 는 이를 검사하여 블락하지 않는다... Service Provider 에 Controller 데코레이터 달고 모듈에 providers 로 등록하는것이 가능하고 정상동작하는듯 하다)
+        // if (!Reflect.getMetadata(INJECTABLE_WATERMARK, provider)) throw new Error(`Not injectable: ${provider.name}`);
         // Todo: getDependencies 해서 가져온 의존성들이 본인의 프로바이더 또는 imported module 의 exported provider 인지 확인해야함.
         const instance = new provider(...this.getDependencies(provider, container));
         // Todo: 이때 onModuleInit 메서드 가졌으면 실행해주기?
@@ -51,7 +52,7 @@ export class NestFactoryStatic {
 
     await Promise.all(Reflect.getMetadata(MODULE_METADATA.CONTROLLERS, module).map(
       async (controller: Type<any>) => {
-        // Todo: 컨트롤러 확인
+        // Todo: 컨트롤러 확인 (마찬가지)
         // Todo: getDependencies 해서 가져온 의존성들이 본인의 프로바이더 또는 하위 모듈에서 내보내진 프로바이더인지 확인해야함.
         const instance = new controller(...this.getDependencies(controller, container));
         container.addInstance(controller.name, instance);
