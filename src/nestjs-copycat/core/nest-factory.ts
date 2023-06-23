@@ -5,9 +5,9 @@ import { NestApplication } from "./nest-application";
 
 export class NestFactoryStatic {
 
-  public async create<T extends INestApplication = INestApplication>(
+  public async create(
     moduleCls: any,
-  ): Promise<T> {
+  ): Promise<INestApplication> {
     
     const container = new NestContainer();
     
@@ -15,8 +15,7 @@ export class NestFactoryStatic {
     
     const instance = new NestApplication(container);
 
-    return instance as T;
-
+    return instance;
   }
 
   private async initialize(module: any, container: NestContainer) {

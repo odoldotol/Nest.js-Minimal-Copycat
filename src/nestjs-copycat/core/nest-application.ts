@@ -1,20 +1,27 @@
 const express = require('express');
 import { Express } from 'express';
 
-import { INestApplication } from "../common/interfaces";
+import { INestApplication, INestApplicationContext } from "../common/interfaces";
 import { NestContainer } from "./injector";
 import { RequestMethod } from '../common';
 import { pathParser } from "../common";
 import { METHOD_METADATA, PATH_METADATA } from '../common/constants';
+import { NestApplicationContext } from './nest-application-context';
 
 export class NestApplication
-  //  extends NestApplicationContext<NestApplicationOptions>
+   extends NestApplicationContext
   implements INestApplication
 {
-
+  // private readonly routesResolver: Resolver;
+  private isListening = false;
+  
   constructor(container: NestContainer) {
+    super(container);
+
     const expressApp = express();
     expressApp.use(express.json());
+
+    // this.routesResolver = new RoutesResolver(this.container);
   }
 
   public async init() {
