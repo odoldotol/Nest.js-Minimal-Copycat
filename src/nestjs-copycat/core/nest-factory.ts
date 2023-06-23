@@ -44,7 +44,7 @@ export class NestFactoryStatic {
     await Promise.all(Reflect.getMetadata(MODULE_METADATA.PROVIDERS, module).map(
       async (provider: Type<any>) => {
         // Todo: 인젝터블 확인
-        // Todo: getDependencies 해서 가져온 의존성들이 본인의 프로바이더 또는 하위 모듈에서 내보내진 프로바이더인지 확인해야함.
+        // Todo: getDependencies 해서 가져온 의존성들이 본인의 프로바이더 또는 imported module 의 exported provider 인지 확인해야함.
         const instance = new provider(...container.getDependencies(provider));
         // Todo: 이때 onModuleInit 메서드 가졌으면 실행해주기?
         container.addInstance(provider.name, instance);
