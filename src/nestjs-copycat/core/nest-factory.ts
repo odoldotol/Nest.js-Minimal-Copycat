@@ -27,7 +27,7 @@ export class NestFactoryStatic {
 
   // Todo: imports, providers, controllers 가 undefined 인 경우라도 문제없이 초기화 해야함.
   // Todo: 내부함수로 나누기, 일부 내부함수를 컨테이너로 옮기기
-  public async moduleInit(module: Type<any>, container: NestContainer) {
+  private async moduleInit(module: Type<any>, container: NestContainer) {
 
     container.modulesContainer.set(module.name, module); // 임시
 
